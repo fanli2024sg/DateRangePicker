@@ -35,17 +35,23 @@ function DateRangePicker({ onRangeChange }: Props) {
     if (!startDate) {
       setStartDate(date);
     } else {
-      if (date < startDate) {
-        setStartDate(undefined);
-      } else if (!endDate) {
-        setEndDate(date);
+      if (!endDate) {
+        if (date >= startDate) {
+          setEndDate(date);
+        } else {
+          setEndDate(startDate);
+          setStartDate(date);
+        }
+      } else {
+        setStartDate(date);
+        setEndDate(undefined);
       }
     }
   }
 
   return (
     <div>
-      <Link to='/dateRangePickerV2'>切換至V2</Link>
+      <Link to='/dateRangePicker'>切換至V1</Link>
       <div className={styles.dateRangePicker}>
         <div className={styles.dateRangePickerHeader}>
           <div className={styles.yearMonth}>{`${year}年${month + 1}月`}</div>
@@ -77,14 +83,23 @@ function DateRangePicker({ onRangeChange }: Props) {
                 {week.map(({ date, disabled }, dayIndex) => {
                   const inRange = startDate <= date && date <= endDate;
                   const isToday = new Date().toDateString() === date.toDateString();
+                  const isStartDate = startDate && date.toDateString() === startDate.toDateString();
+                  const isEndDate = endDate && date.toDateString() === endDate.toDateString();
+
                   return (
                     <td
                       key={dayIndex}
                       className={
                         inRange ? styles.inRange : undefined
-                          || isToday ? styles.isToday : undefined}>
+                          || isToday ? styles.isToday : undefined
+                            || isStartDate ? styles.isStartDate : undefined
+                        + `${disabled ? ` ${styles.disabled}` : ''}`
+                      }>
                       <button
-                        className={disabled ? styles.disabled : undefined}
+                        className={
+                          isToday ? styles.isToday : undefined
+                            || isEndDate ? styles.isEndDate : undefined
+                        }
                         disabled={disabled}
                         onClick={() => handleClick({ date })}>
                         {`${date.getDate()}日`}
@@ -99,9 +114,6 @@ function DateRangePicker({ onRangeChange }: Props) {
       </div>
       <div className={styles.result}>
         {`${startDate ? `你選了 ${startDate.toLocaleDateString()}` : ''}${endDate ? ` 到 ${endDate.toLocaleDateString()}` : ''} `}
-      </div>
-      <div className={styles.result}>
-
       </div>
     </div>
   );

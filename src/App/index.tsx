@@ -1,16 +1,13 @@
-import { lazy, Suspense } from 'react';
+// Componments
+import { Outlet } from 'react-router-dom';
 
 // Styles
 import styles from './index.module.scss';
 
-const DateRangePicker = lazy(() => import('../DateRangePicker'));
-
 function App() {
   return (
     <div className={styles.App}>
-      <Suspense fallback={<h1>Loading</h1>}>
-        <DateRangePicker />
-      </Suspense>
+      <Outlet />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-// COmponents
+// Components
 import LeftOutline from './LeftOutline';
 import RightOutline from './RightOutline';
 

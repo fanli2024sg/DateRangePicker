@@ -103,7 +103,7 @@
       justify-content: center;
       align-items: center;
       width: 50px;
-      height: 2.25rem;
+      height: 36px;
       display: inline-flex;
       -webkit-appearance: button;
       background-color: transparent;
@@ -114,15 +114,37 @@
       transition-timing-function: cubic-bezier(.4, 0, .2, 1);
       transition-duration: .15s;
 
-      &:hover {
-        color: hsl(240 5.9% 10%);
-        background-color: #e6e6e6;
+      &.isEndDate {
+        border: 1px solid #ffffff;
+        margin: 2px;
+        width: 46px;
+        height: 32px;
       }
 
-      &.disabled {
-        opacity: .5;
-        color: hsl(240 3.8% 46.1%);
+      &.isToday {
+        border: 1px solid #ffff76;
+        margin: 2px;
+        width: 46px;
+        height: 32px;
+      }
+    }
+
+    &:hover {
+      color: hsl(240 5.9% 10%);
+      background-color: #e6e6e6;
+    }
+
+
+    &.disabled {
+      color: hsl(240 3.8% 46.1%);
+      opacity: .5;
+
+      &>button {
         cursor: not-allowed;
+      }
+
+      &:hover {
+        background: transparent;
       }
     }
 
@@ -132,6 +154,10 @@
 
     &.isToday {
       background-color: #ffff76;
+    }
+
+    &.isStartDate {
+      background-color: #006edc;
     }
   }
 }
